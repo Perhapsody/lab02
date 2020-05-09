@@ -6,6 +6,8 @@
 /* Then, this project's includes, alphabetically ordered */
 #include "array_helpers.h"
 
+#include "weather.h"
+
 void print_help(char *program_name) {
     /* Print the usage help of this program. */
     printf("Usage: %s <input file path>\n\n"
@@ -35,6 +37,9 @@ char *parse_filepath(int argc, char *argv[]) {
 
 int main(int argc, char *argv[]) {
     char *filepath = NULL;
+    int min_temp;  
+    int temperatura_maximas[YEARS]; 
+    int meses_de_max_precip[YEARS]; 
 
     /* parse the filepath given in command line arguments */
     filepath = parse_filepath(argc, argv);
@@ -44,9 +49,10 @@ int main(int argc, char *argv[]) {
     
     /* parse the file to fill the array and obtain the actual length */
     array_from_file(array, filepath);
-
-    /* show the ordered array in the screen */
-    array_dump(array);
+    min_temp = hist_min_temp(array); 
+    printf("la temperatura minima historica es: %d\n", min_temp); 
+    yearly_max_tmp(array, temperatura_maximas); 
+    max_precipitate(array, meses_de_max_precip);
     
     return (EXIT_SUCCESS);
 }
